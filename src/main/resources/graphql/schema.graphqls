@@ -1,0 +1,45 @@
+type ApplicationLog {
+    id: ID
+    applicationName: String!
+    traceId: String
+    flowName: String
+    caseId: String
+    messageType: String
+    message: String
+    status: String
+    dateTime: String
+}
+
+type LogResponse {
+    applicationName: String
+    traceId: String
+    flowName: String
+    caseId: String
+    messageType: String
+    message: String
+}
+
+type Query {
+    searchLogs(
+        applicationName: String
+        traceId: String
+        flowName: String
+        caseId: String
+        messageType: String
+        status: String
+        startDate: String
+        endDate: String
+    ): [ApplicationLog]!
+}
+
+type Mutation {
+    processLog(
+    applicationName: String!
+    traceId: String!
+    flowName: String!
+    caseId: String!
+    messageType: String!
+    message: String!
+    dateTime: String
+    ): LogResponse!
+}

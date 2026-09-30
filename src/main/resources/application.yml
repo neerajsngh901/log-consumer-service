@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: log-consumer-services
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: log-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      max-poll-records: 500
+      properties:
+        spring.json.trusted.packages: "*"
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  datasource:
+    url: jdbc:mysql://localhost:3306/log_management_db?useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: Neeraj@123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+
+# Configurable Kafka Topic settings
+kafka:
+  topic:
+    name: application-logs-topic
+    partitions: 3
+    replicas: 1
+
+logging:
+  retention:
+    days: 60
+
+spring.graphql:
+  graphiql:
+    enabled: true
